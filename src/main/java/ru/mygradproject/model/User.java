@@ -34,11 +34,10 @@ public class User extends AbstractNamedEntity{
 
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //    @Enumerated(EnumType.STRING)
-
+//    @BatchSize(size = 200)
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    @BatchSize(size = 200)
+    @Column(name = "role", nullable = false)
     private String role;
 
     public User(){

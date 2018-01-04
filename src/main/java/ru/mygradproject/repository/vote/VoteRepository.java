@@ -29,7 +29,7 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId")
     List<Vote> findAllByRestaurantId(Integer restaurantId);
 
-    @Query
+//    @Query
     List<Vote> findAllByDateBetweenAndRestaurantId(LocalDate startDate, LocalDate endDate, int restaurantId);
 
     List<Vote> findAllByUserId(int userId);

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -41,23 +42,26 @@ public class Menu extends AbstractBaseEntity{
     @Column(name = "dessert", nullable = true)
     private String dessert;
 
+    @Column(name = "lunch_price", nullable = false)
+    private BigDecimal lunch_price;
+
     public Menu(){
 
     }
 
     public Menu(Menu menu){
-        this(menu.getId(), menu.getDate(), menu.getRestaurant(), menu.getMainCourse(), menu.getSoup(), menu.getSalad(), menu.getAppetizer(), menu.getDessert());
+        this(menu.getId(), menu.getDate(), menu.getMainCourse(), menu.getSoup(), menu.getSalad(), menu.getAppetizer(), menu.getDessert(), menu.getLunch_price());
     }
 
-    public Menu(Integer id, @NotNull LocalDate date, @NotNull Restaurant restaurant, @NotBlank @Size(min = 2, max = 200) String mainCourse, String soup, String salad, String appetizer, String dessert) {
+    public Menu(Integer id, @NotNull LocalDate date, @NotBlank @Size(min = 2, max = 200) String mainCourse, String soup, String salad, String appetizer, String dessert, BigDecimal lunch_price) {
         super(id);
         this.date = date;
-        this.restaurant = restaurant;
         this.mainCourse = mainCourse;
         this.soup = soup;
         this.salad = salad;
         this.appetizer = appetizer;
         this.dessert = dessert;
+        this.lunch_price = lunch_price;
     }
 
     public LocalDate getDate() {
@@ -116,11 +120,18 @@ public class Menu extends AbstractBaseEntity{
         this.dessert = dessert;
     }
 
+    public BigDecimal getLunch_price() {
+        return lunch_price;
+    }
+
+    public void setLunch_price(BigDecimal lunch_price) {
+        this.lunch_price = lunch_price;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
                 "date=" + date +
-                ", restaurant=" + restaurant +
                 ", mainCourse=" + mainCourse +
                 ", soup=" + soup +
                 ", salad=" + salad +

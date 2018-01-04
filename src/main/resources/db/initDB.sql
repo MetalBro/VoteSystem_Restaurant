@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS restaurants;
 DROP TABLE IF EXISTS menus;
 DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS dishes;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START 100000;
@@ -34,17 +35,27 @@ CREATE TABLE restaurants
   cookery           VARCHAR                   NOT NULL
 );
 
-CREATE TABLE menus
+-- CREATE TABLE menus
+-- (
+--   id                INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+--   restaurant_id     INTEGER                   NOT NULL,
+--   date              DATE                      NOT NULL,
+--   main_course       VARCHAR                   NOT NULL,
+--   soup              VARCHAR,
+--   salad             VARCHAR,
+--   appetizer         VARCHAR,
+--   dessert           VARCHAR,
+--   lunch_price       NUMERIC                   NOT NULL,
+--   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
+-- );
+
+CREATE TABLE dishes
 (
   id                INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  restaurant_id     INTEGER                   NOT NULL,
-  date              DATE                      NOT NULL,
-  main_course       VARCHAR                   NOT NULL,
-  soup              VARCHAR,
-  salad             VARCHAR,
-  appetizer         VARCHAR,
-  dessert           VARCHAR,
-  FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
+  name              VARCHAR                     NOT NULL,
+  price             NUMERIC                     NOT NULL,
+  restaurant_id     INTEGER                     NOT NULL,
+  date              DATE DEFAULT current_date   NOT NULL
 );
 
 CREATE TABLE votes
@@ -53,7 +64,7 @@ CREATE TABLE votes
   user_id           INTEGER                   NOT NULL,
   restaurant_id     INTEGER                   NOT NULL,
 --   date_time         TIMESTAMP DEFAULT now()   NOT NULL,
-  date              DATE DEFAULT now()        NOT NULL,
+  date              DATE DEFAULT current_date NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
 );

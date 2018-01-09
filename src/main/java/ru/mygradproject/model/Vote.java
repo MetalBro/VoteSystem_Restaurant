@@ -9,42 +9,37 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "votes")
-public class Vote extends AbstractBaseEntity {
+public class Vote {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
-    private User user;
+    @EmbeddedId
+    private VotePK primaryKey;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
 
-    @Column(name = "date", nullable = false)
-    @NotNull
-    private LocalDate date;
-
     public Vote(){
-
     }
 
-    public Vote(Integer id, @NotNull User user, @NotNull Restaurant restaurant, @NotNull LocalDate date) {
-        super(id);
-        this.user = user;
+    public Vote(@NotNull User user, @NotNull Restaurant restaurant, @NotNull LocalDate date) {
+        this.primaryKey = new VotePK(user, date);
         this.restaurant = restaurant;
-        this.date = date;
     }
 
-    public User getUser() {
-        return user;
+
+//    public Vote(@NotNull int user_id, @NotNull Restaurant restaurant, @NotNull LocalDate date) {
+//        this.primaryKey = new VotePK(user_id, date);
+//        this.restaurant = restaurant;
+//    }
+
+
+    public VotePK getPrimaryKey() {
+        return primaryKey;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+
 
     public Restaurant getRestaurant() {
         return restaurant;
@@ -54,20 +49,12 @@ public class Vote extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     @Override
     public String toString() {
         return "Vote{" +
-                "user=" + user +
+                "userId=" + primaryKey.getUser().getId() +
                 ", restaurant=" + restaurant +
-                ", date=" + date +
+                ", date=" + primaryKey.getDate() +
                 '}';
     }
 }

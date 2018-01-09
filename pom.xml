@@ -6,6 +6,8 @@
 
     <groupId>graduateproject</groupId>
     <artifactId>graduateproject</artifactId>
+    <packaging>war</packaging>
+
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -32,7 +34,7 @@
         <javax-el.version>3.0.1-b08</javax-el.version>
 
         <!--Tools-->
-        <!--<ehcache.version>3.4.0</ehcache.version>-->
+        <ehcache.version>3.4.0</ehcache.version>
 
         <!--webjars-->
         <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
@@ -46,7 +48,7 @@
     </properties>
 
     <build>
-        <finalName>topjava</finalName>
+        <finalName>graduateproject</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -121,6 +123,23 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <scope>runtime</scope>
+            <version>${ehcache.version}</version>
+        </dependency>
 
         <!--Web-->
         <dependency>
@@ -162,10 +181,16 @@
 
         <!--DB-->
         <!--Postgres-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <!--HSQLDB-->
         <!--<dependency>-->
-            <!--<groupId>org.postgresql</groupId>-->
-            <!--<artifactId>postgresql</artifactId>-->
-            <!--<version>${postgresql.version}</version>-->
+            <!--<groupId>org.hsqldb</groupId>-->
+            <!--<artifactId>hsqldb</artifactId>-->
+            <!--<version>2.4.0</version>-->
         <!--</dependency>-->
 
         <!-- Spring JDBC -->
@@ -173,11 +198,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>

@@ -13,6 +13,9 @@
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
+    <!--<context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
+    <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
+
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="classpath:db/${jdbc.initLocation}"/>
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
@@ -20,10 +23,9 @@
 
     <tx:annotation-driven/>
 
-    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-              p:driverClassName="org.hsqldb.jdbcDriver"
+              p:driverClassName="${database.driver}"
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"
@@ -50,6 +52,6 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <context:component-scan base-package="ru.mygradproject.**.repository.*"/>
-    <jpa:repositories base-package="ru.mygradproject.**.repository.*"/>
+    <context:component-scan base-package="ru.mygradproject.**.repository"/>
+    <jpa:repositories base-package="ru.mygradproject.**.repository"/>
 </beans>

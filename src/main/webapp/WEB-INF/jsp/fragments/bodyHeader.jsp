@@ -3,11 +3,13 @@
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <a href="meals" class="navbar-brand"><spring:message code="app.title"/></a>
+        <%--<a href="meals" class="navbar-brand"><spring:message code="app.title"/></a>--%>
+        <a href="meals" class="navbar-brand">Test GP</a>
 
         <div class="collapse navbar-collapse">
             <form class="navbar-form navbar-right">
-                <a class="btn btn-info" href="users"><spring:message code="user.title"/></a>
+                <%--<a class="btn btn-info" href="users"><spring:message code="user.title"/></a>--%>
+                <a class="btn btn-info" href="users">USERS></a>
 
                 <a class="btn btn-primary" href="">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>

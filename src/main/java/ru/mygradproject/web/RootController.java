@@ -6,20 +6,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.mygradproject.AuthorizedUser;
-import ru.mygradproject.repository.restaurant.RestaurantRepositoryImpl;
-import ru.mygradproject.repository.user.UserRepository;
-import ru.mygradproject.repository.user.UserRepositoryImpl;
+import ru.mygradproject.service.RestaurantService;
+import ru.mygradproject.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RootController {
 
-    @Autowired
-    private UserRepositoryImpl userRepository;
+    private UserService userService;
+
+    private RestaurantService restaurantService;
 
     @Autowired
-    private RestaurantRepositoryImpl restaurantRepository;
+    public RootController(UserService userService, RestaurantService restaurantService) {
+        this.userService = userService;
+        this.restaurantService = restaurantService;
+    }
 
     @GetMapping("/")
     public String root() {
@@ -28,8 +31,7 @@ public class RootController {
 
     @GetMapping("/users")
     public String users(Model model) {
-//        model.addAttribute("users", userService.getAll());
-        model.addAttribute("users", userRepository.getAll());
+        model.addAttribute("users", userService.getAll());
         return "users";
     }
 
@@ -37,14 +39,12 @@ public class RootController {
     public String setUser(HttpServletRequest request) {
         int userId = Integer.valueOf(request.getParameter("userId"));
         AuthorizedUser.setId(userId);
-        return "redirect:restaurans";
+        return "redirect:restaurants";
     }
 
     @GetMapping("/restaurants")
     public String meals(Model model) {
-//        model.addAttribute("meals",
-//                MealsUtil.getWithExceeded(mealService.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay()));
-        model.addAttribute("restaurants", restaurantRepository.getAll());
+        model.addAttribute("restaurants", restaurantService.getAll());
         return "restaurants";
     }
 

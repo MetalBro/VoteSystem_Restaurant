@@ -1,7 +1,6 @@
-package ru.mygradproject.repository.user;
+package ru.mygradproject.repository;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mygradproject.model.User;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +31,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getByEmail(String email);
 
-//    @Query("SELECT u FROM User u LEFT JOIN FETCH u.meals WHERE u.id = ?1")
-//    @EntityGraph(value = User.GRAPH_WITH_MEALS)
-
-    //    https://stackoverflow.com/a/46013654/548473
-//    @EntityGraph(attributePaths = {"meals"}, type = EntityGraph.EntityGraphType.LOAD)
-//    @Query("SELECT u FROM User u WHERE u.id=?1")
-//    User getWithMeals(int id);
+    @Query("SELECT u FROM User u INNER JOIN Vote v ON u.id=v.primaryKey.user.id WHERE v.restaurant.id=:restaurantId AND v.primaryKey.date=:date")
+    List<User> getByRestaurantAndDate(@Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 }

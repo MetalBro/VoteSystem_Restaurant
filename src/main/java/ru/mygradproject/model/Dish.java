@@ -1,5 +1,6 @@
 package ru.mygradproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,10 +16,11 @@ public class Dish extends AbstractNamedEntity {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
+    @JsonIgnore
     private Restaurant restaurant;
 
     @Column(name = "date", nullable = false)
@@ -26,16 +28,16 @@ public class Dish extends AbstractNamedEntity {
     private LocalDate date;
 
     public Dish(){
-
     }
 
     public Dish(Dish dish){
-        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getDate());
+        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant(), dish.getDate());
     }
 
-    public Dish(Integer id, String name, BigDecimal price, @NotNull LocalDate date) {
+    public Dish(Integer id, String name, BigDecimal price, Restaurant restaurant, @NotNull LocalDate date) {
         super(id, name);
         this.price = price;
+        this.restaurant = restaurant;
         this.date = date;
     }
 
@@ -66,7 +68,8 @@ public class Dish extends AbstractNamedEntity {
     @Override
     public String toString() {
         return "Dish{" +
-                "id=" + id +
+                "dishId=" + id +
+                ", restaurantId=" + restaurant.getId() +
                 ", name='" + name +
                 ", price=" + price +
                 ", date=" + date +

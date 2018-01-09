@@ -3,6 +3,7 @@
 
 <div class="footer">
     <div class="container">
-        <spring:message code="app.footer"/>
+        <%--<spring:message code="app.footer"/>--%>
+        FOOTER
     </div>
 </div>

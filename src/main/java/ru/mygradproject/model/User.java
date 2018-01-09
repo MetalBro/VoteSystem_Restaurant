@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -32,6 +33,9 @@ public class User extends AbstractNamedEntity{
     @NotNull
     private Date registered = new Date();
 
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
+    private boolean enabled = true;
+
 //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //    @Enumerated(EnumType.STRING)
 //    @BatchSize(size = 200)
@@ -45,14 +49,19 @@ public class User extends AbstractNamedEntity{
     }
 
     public User (User u){
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRegistered(), u.getRole());
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRegistered(), u.isEnabled(), u.getRole());
     }
 
-    public User(Integer id, String name, @Email @NotBlank @Size(max = 100) String email, @NotBlank @Size(min = 5, max = 64) String password, @NotNull Date registered, String role) {
+    public User(Integer id, String name, String email, String password, String role) {
+        this(id, name, email, password, new Date(), true, role);
+    }
+
+    public User(Integer id, String name, @Email @NotBlank @Size(max = 100) String email, @NotBlank @Size(min = 5, max = 64) String password, @NotNull Date registered, Boolean enabled, String role) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.registered = registered;
+        this.enabled = enabled;
         this.role = role;
     }
 
@@ -86,6 +95,14 @@ public class User extends AbstractNamedEntity{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     //    public Set<Role> getRoles() {

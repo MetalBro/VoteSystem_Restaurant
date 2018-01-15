@@ -1,6 +1,7 @@
 package ru.mygradproject.service;
 
 import ru.mygradproject.model.Dish;
+import ru.mygradproject.model.Restaurant;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,5 +20,7 @@ public interface DishService {
     Map<LocalDate, List<Dish>> findActuals(int restaurantId, LocalDate currentDate);
 
     List<Dish> getByRestaurantAndDate(int restaurantId, LocalDate localDate);
+
+    Map<Restaurant, List<Dish>> getRestaurantsWithDishes(LocalDate currentDate);
 
 }

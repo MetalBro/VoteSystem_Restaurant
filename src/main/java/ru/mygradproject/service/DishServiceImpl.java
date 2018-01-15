@@ -1,10 +1,13 @@
 package ru.mygradproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.mygradproject.model.Dish;
+import ru.mygradproject.model.Restaurant;
 import ru.mygradproject.repository.DishRepository;
 import ru.mygradproject.repository.RestaurantRepository;
 
@@ -27,6 +30,7 @@ public class DishServiceImpl implements DishService{
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = {"dishesActuals","dishesByDate"}, allEntries = true)
     @Override
     @Transactional
     public Dish createOrUpdate(Dish dish, int restaurantId) {
@@ -38,11 +42,13 @@ public class DishServiceImpl implements DishService{
         return dishRepository.save(dish);
     }
 
+    @CacheEvict(value = {"dishesActuals","dishesByDate"}, allEntries = true)
     @Override
     public void delete(int id) {
         dishRepository.deleteById(id);
     }
 
+    @CacheEvict(value = {"dishesActuals","dishesByDate"}, allEntries = true)
     @Override
     public void deleteAllByRestaurant(int restaurantId) {
         dishRepository.deleteAllByRestaurant(restaurantRepository.getOne(restaurantId));
@@ -53,6 +59,7 @@ public class DishServiceImpl implements DishService{
         return dishRepository.findById(id).filter(dish -> dish.getRestaurant().getId() == restaurantId).orElse(null);
     }
 
+    @Cacheable("dishesActuals")
     @Override
     public Map<LocalDate, List<Dish>> findActuals(int restaurantId, LocalDate currentDate){
         Map<LocalDate, List<Dish>> dateDishMap = new HashMap<>();
@@ -63,6 +70,18 @@ public class DishServiceImpl implements DishService{
         return dateDishMap;
     }
 
+    @Cacheable(value = "dishesForToday")
+    @Override
+    public Map<Restaurant, List<Dish>> getRestaurantsWithDishes(LocalDate currentDate){
+        Map<Restaurant, List<Dish>> restDishMap = new HashMap<>();
+        restDishMap = dishRepository.findAllByDate(currentDate).stream()
+                .collect(
+                        Collectors.groupingBy(Dish::getRestaurant)
+                );
+        return restDishMap;
+    }
+
+    @Cacheable(value = "dishesByDate")
     @Override
     public List<Dish> getByRestaurantAndDate(int restaurantId, LocalDate localDate) {
         return dishRepository.findAllByRestaurantIdAndDate(restaurantId, localDate);

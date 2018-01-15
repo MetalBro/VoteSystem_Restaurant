@@ -1,6 +1,5 @@
 package ru.mygradproject.web.user;
 
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,4 +68,10 @@ public class AdminRestController extends AbstractUserController {
     public User getByMail(@RequestParam("email") String email) {
         return super.getByMail(email);
     }           // +++
+
+    @Override
+    @PostMapping(value = "/{id}")
+    public void enable(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {              // +++
+        super.enable(id, enabled);
+    }
 }

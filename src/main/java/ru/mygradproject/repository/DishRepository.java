@@ -26,10 +26,12 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Transactional
     void deleteAllByRestaurant(Restaurant restaurant);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.date=:currentDate")
+    List<Dish> findAllByDate(LocalDate localDate);
+
+    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.restaurant.id=:restaurantId AND d.date=:currentDate")
     List<Dish> findAllByRestaurantIdAndDate(@Param("restaurantId")int restaurantId,@Param("currentDate") LocalDate localDate);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.date>=:currentDate ORDER BY d.date ASC")
+    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.restaurant.id=:restaurantId AND d.date>=:currentDate ORDER BY d.date ASC")
     List<Dish> getActuals(@Param("restaurantId") int restaurantId,@Param("currentDate") LocalDate currentDate);
 
 }

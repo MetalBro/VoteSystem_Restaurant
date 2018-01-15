@@ -1,7 +1,9 @@
 package ru.mygradproject.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,17 +31,9 @@ public class Vote {
     }
 
 
-//    public Vote(@NotNull int user_id, @NotNull Restaurant restaurant, @NotNull LocalDate date) {
-//        this.primaryKey = new VotePK(user_id, date);
-//        this.restaurant = restaurant;
-//    }
-
-
     public VotePK getPrimaryKey() {
         return primaryKey;
     }
-
-
 
     public Restaurant getRestaurant() {
         return restaurant;

@@ -25,12 +25,9 @@ public class DishRestController {
 
     private final DishService dishService;
 
-    private final RestaurantService restaurantService;
-
     @Autowired
-    public DishRestController(DishService dishService, RestaurantService restaurantService) {
+    public DishRestController(DishService dishService) {
         this.dishService = dishService;
-        this.restaurantService = restaurantService;
     }
 
     @GetMapping(value = "/actuals")
@@ -45,39 +42,9 @@ public class DishRestController {
         return dishService.getByRestaurantAndDate(restaurantId, localDate);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
-        dishService.delete(id);
-    }                           // +++
-
-    @DeleteMapping
-    public void deleteAllByRestaurantId(@PathVariable("restaurantId") int restaurantId) {               // +++
-        dishService.deleteAllByRestaurant(restaurantId);
-    }
-
     @GetMapping(value = "/{id}")
     public Dish get(@PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {       // +++
         return dishService.get(id, restaurantId);
     }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {    // +++
-        Dish created = dishService.createOrUpdate(dish, restaurantId);
-        Map<String, Integer> uriParams = new HashMap<>();
-        uriParams.put("restaurantId", restaurantId);
-        uriParams.put("id", created.getId());
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(uriParams).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {            // +++
-        dishService.createOrUpdate(dish, restaurantId);
-    }
-
 
 }

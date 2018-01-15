@@ -42,7 +42,7 @@ public class User extends AbstractNamedEntity{
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role", nullable = false)
-    private String role;
+    private String role = String.valueOf(Role.ROLE_USER);
 
     public User(){
 

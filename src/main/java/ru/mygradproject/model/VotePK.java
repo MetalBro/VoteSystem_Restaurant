@@ -1,5 +1,7 @@
 package ru.mygradproject.model;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,10 +19,6 @@ public class VotePK implements Serializable {
     @NotNull
     private User user;
 
-//    @Column(name = "user_id", nullable = false)
-//    @NotNull
-//    private Integer user_id;
-
     @Column(name = "date", nullable = false)
     @NotNull
     private LocalDate date;
@@ -33,12 +31,6 @@ public class VotePK implements Serializable {
         this.date = date;
     }
 
-//    public VotePK(@NotNull Integer user_id, @NotNull LocalDate date) {
-//        this.user_id = user_id;
-//        this.date = date;
-//    }
-
-
     public User getUser() {
         return user;
     }
@@ -46,11 +38,6 @@ public class VotePK implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
-
-//    public Integer getUser_id() {
-//        return user_id;
-//    }
 
     public LocalDate getDate() {
         return date;

@@ -1,10 +1,13 @@
 package ru.mygradproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.mygradproject.model.User;
 import ru.mygradproject.model.Vote;
+import ru.mygradproject.model.VotePK;
 import ru.mygradproject.repository.RestaurantRepository;
 import ru.mygradproject.repository.UserRepository;
 import ru.mygradproject.repository.VoteRepository;
@@ -32,6 +35,7 @@ public class VoteServiceImpl implements VoteService{
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
     @Override
     public Vote save(int restaurantId, int userId) {
         if (!canVote()) return null;
@@ -41,6 +45,7 @@ public class VoteServiceImpl implements VoteService{
         }
     }
 
+    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
     @Override
     public Vote save(int restaurantId, int userId, LocalDate localDate) {
         if (!canVote(localDate)) return null;
@@ -50,6 +55,7 @@ public class VoteServiceImpl implements VoteService{
         }
     }
 
+    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
     @Override
     public void delete(int userId, LocalDate localDate) {
         voteRepository.delete(userId, localDate);
@@ -72,11 +78,13 @@ public class VoteServiceImpl implements VoteService{
         return voteRepository.findAllByUserId(userId);
     }
 
+    @Cacheable(value = "votesRestaurantCount")
     @Override
     public long countAllByRestaurantId(int restaurantId) {
         return voteRepository.countAllByRestaurantId(restaurantId);
     }
 
+    @Cacheable(value = "votesRestaurantDate")
     @Override
     public List<Vote> findAllByRestaurantAndDate(int restaurantId, LocalDate localDate) {
         return voteRepository.findAllByRestaurantAndDate(restaurantId, localDate);
@@ -87,6 +95,7 @@ public class VoteServiceImpl implements VoteService{
         return userRepository.getByRestaurantAndDate(restaurantId, localDate);
     }
 
+    @Cacheable(value = "votesAllCount")
     @Override
     public long countAll() {
         return voteRepository.count();

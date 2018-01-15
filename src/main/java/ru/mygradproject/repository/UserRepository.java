@@ -31,6 +31,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getByEmail(String email);
 
-    @Query("SELECT u FROM User u INNER JOIN Vote v ON u.id=v.primaryKey.user.id WHERE v.restaurant.id=:restaurantId AND v.primaryKey.date=:date")
+    @Query("SELECT u FROM User u JOIN FETCH Vote v ON u.id=v.primaryKey.user.id WHERE v.restaurant.id=:restaurantId AND v.primaryKey.date=:date")
     List<User> getByRestaurantAndDate(@Param("restaurantId") int restaurantId, @Param("date") LocalDate localDate);
 }

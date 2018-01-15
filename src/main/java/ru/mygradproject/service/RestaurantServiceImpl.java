@@ -1,6 +1,8 @@
 package ru.mygradproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,18 +23,21 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return restaurantRepository.save(restaurant);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id) {
         restaurantRepository.deleteById(id);
@@ -43,6 +48,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findById(id).orElse(null);
     }
 
+    @Cacheable("restaurants")
     @Override
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll(SORT_NAME);

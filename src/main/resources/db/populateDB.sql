@@ -44,7 +44,7 @@ INSERT INTO dishes (name, price, restaurant_id, date) VALUES
   ('Говядина', 210.5, 100005, '2017-10-12'),
   ('Чай', 50, 100005, '2017-10-12');
 
-INSERT INTO votes ("user_id", "restaurant_id", "date") VALUES
+INSERT INTO votes (user_id, restaurant_id, date) VALUES
   (100000, 100005, '2017-06-21'),
   (100000, 100006, '2018-05-31'),
   (100000, 100007, '2017-10-11'),

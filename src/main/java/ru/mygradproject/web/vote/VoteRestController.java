@@ -5,10 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mygradproject.AuthorizedUser;
-import ru.mygradproject.model.User;
 import ru.mygradproject.model.Vote;
 import ru.mygradproject.service.VoteService;
-import ru.mygradproject.util.validation.DateBetweenException;
 import ru.mygradproject.util.validation.VoteException;
 
 import java.time.LocalDate;

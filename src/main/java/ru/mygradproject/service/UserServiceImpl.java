@@ -4,18 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.mygradproject.AuthorizedUser;
 import ru.mygradproject.model.User;
 import ru.mygradproject.repository.UserRepository;
 
 import java.util.List;
 
-//@Service("userService")
-@Service
-public class UserServiceImpl implements UserService{
-//public class UserServiceImpl implements UserService, UserDetailsService{
+@Service("userService")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -72,12 +74,12 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User user = userRepository.getByEmail(email.toLowerCase());
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User " + email + " is not found");
-//        }
-//        return new AuthorizedUser(user);
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
 }

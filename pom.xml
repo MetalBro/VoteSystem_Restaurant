@@ -18,6 +18,8 @@
         <tomcat.version>9.0.1</tomcat.version>
         <spring.version>5.0.1.RELEASE</spring.version>
         <spring-data-jpa.version>2.0.2.RELEASE</spring-data-jpa.version>
+        <spring-security.version>5.0.0.RELEASE</spring-security.version>
+
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
@@ -68,6 +70,45 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.cargo</groupId>-->
+                <!--<artifactId>cargo-maven2-plugin</artifactId>-->
+                <!--<version>1.6.5</version>-->
+                <!--<configuration>-->
+                    <!--<container>-->
+                        <!--<containerId>tomcat9x</containerId>-->
+                        <!--<systemProperties>-->
+                            <!--<file.encoding>UTF-8</file.encoding>-->
+                            <!--&lt;!&ndash;<spring.profiles.active>tomcat,datajpa</spring.profiles.active>&ndash;&gt;-->
+                        <!--</systemProperties>-->
+                        <!--<dependencies>-->
+                            <!--<dependency>-->
+                                <!--<groupId>org.postgresql</groupId>-->
+                                <!--<artifactId>postgresql</artifactId>-->
+                            <!--</dependency>-->
+                        <!--</dependencies>-->
+                    <!--</container>-->
+                    <!--<configuration>-->
+                        <!--<configfiles>-->
+                            <!--<configfile>-->
+                                <!--<file>src/main/resources/tomcat/context.xml</file>-->
+                                <!--<todir>conf/Catalina/localhost/</todir>-->
+                                <!--<tofile>context.xml.default</tofile>-->
+                            <!--</configfile>-->
+                        <!--</configfiles>-->
+                    <!--</configuration>-->
+                    <!--<deployables>-->
+                        <!--<deployable>-->
+                            <!--<groupId>graduateproject</groupId>-->
+                            <!--<artifactId>graduateproject</artifactId>-->
+                            <!--<type>war</type>-->
+                            <!--<properties>-->
+                                <!--<context>${project.build.finalName}</context>-->
+                            <!--</properties>-->
+                        <!--</deployable>-->
+                    <!--</deployables>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -110,6 +151,18 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring-data-jpa.version}</version>
+        </dependency>
+
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
         <!--- ORM -->
@@ -188,49 +241,49 @@
         </dependency>
 
         <!-- Webjars (static dependencies distributed as JAR files) -->
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>jquery</artifactId>
-            <version>${webjars-jquery.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${webjars-bootstrap.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.webjars</groupId>
-                    <artifactId>jquery</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>datatables</artifactId>
-            <version>${webjars-datatables.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.webjars.bower</groupId>
-                    <artifactId>jquery</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>datetimepicker</artifactId>
-            <version>${webjars-datetimepicker.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.webjars.bower</groupId>
-                    <artifactId>jquery</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>noty</artifactId>
-            <version>${webjars-noty.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.webjars.bower</groupId>-->
+            <!--<artifactId>jquery</artifactId>-->
+            <!--<version>${webjars-jquery.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.webjars</groupId>-->
+            <!--<artifactId>bootstrap</artifactId>-->
+            <!--<version>${webjars-bootstrap.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.webjars</groupId>-->
+                    <!--<artifactId>jquery</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.webjars</groupId>-->
+            <!--<artifactId>datatables</artifactId>-->
+            <!--<version>${webjars-datatables.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.webjars.bower</groupId>-->
+                    <!--<artifactId>jquery</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.webjars.bower</groupId>-->
+            <!--<artifactId>datetimepicker</artifactId>-->
+            <!--<version>${webjars-datetimepicker.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.webjars.bower</groupId>-->
+                    <!--<artifactId>jquery</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.webjars.bower</groupId>-->
+            <!--<artifactId>noty</artifactId>-->
+            <!--<version>${webjars-noty.version}</version>-->
+        <!--</dependency>-->
 
         <!--JSON-->
         <dependency>

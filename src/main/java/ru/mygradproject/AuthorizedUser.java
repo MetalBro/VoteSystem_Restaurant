@@ -1,17 +1,64 @@
 package ru.mygradproject;
 
 
-import ru.mygradproject.model.AbstractBaseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import ru.mygradproject.model.User;
+import ru.mygradproject.to.UserTo;
+import ru.mygradproject.util.UserUtils;
 
-public class AuthorizedUser {
-    private static int id = AbstractBaseEntity.START_SEQ;
+import static java.util.Objects.requireNonNull;
+
+//public class AuthorizedUser {
+//    private static int id = AbstractBaseEntity.START_SEQ;
+//
+//    public static int id() {
+//        return id;
+//    }
+//
+//    public static void setId(int id) {
+//        AuthorizedUser.id = id;
+//    }
+//
+//}
+
+public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
+
+    private static final long serialVersionUID = 1L;
+
+    private final UserTo userTo;
+
+    public AuthorizedUser(User user) {
+        super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, AuthorityUtils.createAuthorityList(user.getRole()));
+        userTo = UserUtils.asTo(user);
+    }
+
+    public static AuthorizedUser safeGet() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
+        return (principal instanceof AuthorizedUser) ? (AuthorizedUser) principal : null;
+    }
+
+    public static AuthorizedUser get() {
+        AuthorizedUser user = safeGet();
+        requireNonNull(user, "No authorized user found");
+        return user;
+    }
 
     public static int id() {
-        return id;
+        return get().userTo.getId();
     }
 
-    public static void setId(int id) {
-        AuthorizedUser.id = id;
+    public UserTo getUserTo() {
+        return userTo;
     }
 
+    @Override
+    public String toString() {
+        return userTo.toString();
+    }
 }

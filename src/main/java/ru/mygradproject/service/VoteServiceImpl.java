@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.mygradproject.model.User;
 import ru.mygradproject.model.Vote;
-import ru.mygradproject.model.VotePK;
 import ru.mygradproject.repository.RestaurantRepository;
 import ru.mygradproject.repository.UserRepository;
 import ru.mygradproject.repository.VoteRepository;

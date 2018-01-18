@@ -10,19 +10,6 @@ import ru.mygradproject.util.UserUtils;
 
 import static java.util.Objects.requireNonNull;
 
-//public class AuthorizedUser {
-//    private static int id = AbstractBaseEntity.START_SEQ;
-//
-//    public static int id() {
-//        return id;
-//    }
-//
-//    public static void setId(int id) {
-//        AuthorizedUser.id = id;
-//    }
-//
-//}
-
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = 1L;

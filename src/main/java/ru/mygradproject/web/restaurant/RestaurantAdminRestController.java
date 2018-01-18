@@ -32,10 +32,10 @@ public class RestaurantAdminRestController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {                                            // +++
         restaurantService.delete(id);
-    }           // +++
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {  // +++
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.create(restaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -48,5 +48,5 @@ public class RestaurantAdminRestController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody Restaurant restaurant) {                                    // +++
         restaurantService.update(restaurant);
-    }       // +++
+    }
 }

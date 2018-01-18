@@ -23,7 +23,7 @@ public class VoteAdminRestController {
         this.voteService = voteService;
     }
 
-    @GetMapping(value = "/restaurants/{restaurantId}/between", produces = MediaType.APPLICATION_JSON_VALUE)     // +++
+    @GetMapping(value = "/restaurants/{restaurantId}/between", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getBetween(@PathVariable("restaurantId") int restaurantId,
                                  @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                  @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
@@ -31,7 +31,7 @@ public class VoteAdminRestController {
         return voteService.findAllByDateBetweenAndRestaurantId(startDate, endDate, restaurantId);
     }
 
-    @GetMapping(value = "/restaurants/{restaurantId}/usersBy", produces = MediaType.APPLICATION_JSON_VALUE)          // +++
+    @GetMapping(value = "/restaurants/{restaurantId}/usersBy", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getUsersToLunchThisDayAndRestaurant(@PathVariable("restaurantId") int restaurantId,
                                                           @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate){
         return voteService.findUsersForRestaurantAndDate(restaurantId, localDate);

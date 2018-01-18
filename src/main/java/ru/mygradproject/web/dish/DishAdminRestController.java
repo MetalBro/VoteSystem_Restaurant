@@ -28,15 +28,15 @@ public class DishAdminRestController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         dishService.delete(id);
-    }                           // +++
+    }
 
     @DeleteMapping
-    public void deleteAllByRestaurantId(@PathVariable("restaurantId") int restaurantId) {               // +++
+    public void deleteAllByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
         dishService.deleteAllByRestaurant(restaurantId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {    // +++
+    public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {
         Dish created = dishService.createOrUpdate(dish, restaurantId);
         Map<String, Integer> uriParams = new HashMap<>();
         uriParams.put("restaurantId", restaurantId);
@@ -50,7 +50,7 @@ public class DishAdminRestController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {            // +++
+    public void update(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {
         dishService.createOrUpdate(dish, restaurantId);
     }
 }

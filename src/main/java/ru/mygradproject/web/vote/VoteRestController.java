@@ -24,43 +24,43 @@ public class VoteRestController {
         this.voteService = voteService;
     }
 
-    @PostMapping(value = "/restaurants/{restaurantId}")             // голосование на сегодня
-    public ResponseEntity<Void> createWithLocation(@PathVariable("restaurantId") int restaurantId) {            // +++
+    @PostMapping(value = "/restaurants/{restaurantId}")
+    public ResponseEntity<Void> createWithLocation(@PathVariable("restaurantId") int restaurantId) {
         Vote created = voteService.save(restaurantId, AuthorizedUser.id());
         if (created == null) throw new VoteException("You can not vote today more");
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/restaurants/{restaurantId}/dishes/{date}")                   // голосование на определенную дату
-    public ResponseEntity<Void> createWithLocation(@PathVariable("restaurantId") int restaurantId,              // +++
-                                                   @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate localDate) {            // +++
+    @PostMapping(value = "/restaurants/{restaurantId}/dishes/{date}")
+    public ResponseEntity<Void> createWithLocation(@PathVariable("restaurantId") int restaurantId,
+                                                   @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate localDate) {
         Vote created = voteService.save(restaurantId, AuthorizedUser.id(), localDate);
         if (created == null) throw new VoteException("You can not vote today more");
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = "/{date}")                                                                           // +++
+    @DeleteMapping(value = "/{date}")
     public void delete(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localdate){
         voteService.delete(AuthorizedUser.id(), localdate);
     }
 
-    @GetMapping(value = "/{date}", produces = MediaType.APPLICATION_JSON_VALUE)                                 // +++
+    @GetMapping(value = "/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Vote get(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localdate){
         return voteService.get(AuthorizedUser.id(), localdate);
     }
 
-    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)                                   // +++
+    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getByUser(){
         return voteService.findAllByUserId(AuthorizedUser.id());
     }
 
 
-    @GetMapping(value = "/restaurants/{restaurantId}/count", produces = MediaType.APPLICATION_JSON_VALUE)       // +++
+    @GetMapping(value = "/restaurants/{restaurantId}/count", produces = MediaType.APPLICATION_JSON_VALUE)
     public long countByRestaurant(@PathVariable("restaurantId") int restaurantId){
         return voteService.countAllByRestaurantId(restaurantId);
     }
 
-    @GetMapping(value = "/countAll", produces = MediaType.APPLICATION_JSON_VALUE)                               // +++
+    @GetMapping(value = "/countAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public long countAll(){
         return voteService.countAll();
     }

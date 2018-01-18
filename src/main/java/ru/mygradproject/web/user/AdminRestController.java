@@ -26,9 +26,9 @@ public class AdminRestController extends AbstractUserController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable("id") int id) {
         return super.get(id);
-    }                               // +++
+    }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)  // +++
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         User created = super.create(user);
 
@@ -40,7 +40,7 @@ public class AdminRestController extends AbstractUserController {
     }
 
     @PostMapping(value = "/ajax")
-    public void createOrUpdate(@RequestParam("id") Integer id,                                              // +++
+    public void createOrUpdate(@RequestParam("id") Integer id,
                                @RequestParam("name") String name,
                                @RequestParam("email") String email,
                                @RequestParam("password") String password) {
@@ -55,19 +55,19 @@ public class AdminRestController extends AbstractUserController {
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         super.delete(id);
-    }                                   // +++
+    }
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user, @PathVariable("id") int id) {
         super.update(user, id);
-    }     // +++
+    }
 
     @Override
     @GetMapping(value = "/by", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getByMail(@RequestParam("email") String email) {
         return super.getByMail(email);
-    }           // +++
+    }
 
     @Override
     @PostMapping(value = "/{id}")

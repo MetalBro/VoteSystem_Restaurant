@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mygradproject.model.Vote;
+import ru.mygradproject.model.VotePK;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface VoteRepository extends JpaRepository<Vote, Integer> {
+public interface VoteRepository extends JpaRepository<Vote, VotePK> {
 
     @Transactional
     @Modifying

@@ -2,15 +2,12 @@ package ru.mygradproject.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.mygradproject.model.Dish;
 import ru.mygradproject.model.Restaurant;
 import ru.mygradproject.service.DishService;
 import ru.mygradproject.service.RestaurantService;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -34,17 +31,17 @@ public class RestaurantRestController {
     @GetMapping
     public List<Restaurant> getAll() {                                                          // +++
         return restaurantService.getAll();
-    }                   // +++
+    }
 
     @GetMapping(value = "/{id}")
     public Restaurant get(@PathVariable("id") int id) {
         return restaurantService.get(id);
-    }     // +++
+    }
 
     @GetMapping(value = "/by")
     public Restaurant get(@RequestParam("name") String name) {                                  // +++
         return restaurantService.getByName(name);
-    }   // +++
+    }
 
     @GetMapping(value = "/todayDishes")
     public Map<Restaurant, List<Dish>> getRestaurantsWithDishes(){

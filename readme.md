@@ -1,5 +1,6 @@
+[![Dependency Status](https://www.versioneye.com/user/projects/5a5fe4080fb24f002f35ab89/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a5fe4080fb24f002f35ab89)
 
-##The voting system for deciding where to have lunch
+## The voting system for deciding where to have lunch
 
 Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) **without frontend**.
 

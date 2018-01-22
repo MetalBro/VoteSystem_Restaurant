@@ -35,6 +35,7 @@ CREATE TABLE dishes
   date              DATE DEFAULT current_date   NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
 );
+CREATE UNIQUE INDEX dishes_unique_idx ON dishes (restaurant_id, date, name);
 
 CREATE TABLE votes
 (

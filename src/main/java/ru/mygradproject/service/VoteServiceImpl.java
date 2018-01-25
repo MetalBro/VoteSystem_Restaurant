@@ -34,7 +34,7 @@ public class VoteServiceImpl implements VoteService{
         this.restaurantRepository = restaurantRepository;
     }
 
-    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
+    @CacheEvict(value = {"votesRestaurantDate"}, allEntries = true)
     @Override
     public Vote save(int restaurantId, int userId) {
         if (!canVote()) return null;
@@ -44,7 +44,7 @@ public class VoteServiceImpl implements VoteService{
         }
     }
 
-    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
+    @CacheEvict(value = {"votesRestaurantDate"}, allEntries = true)
     @Override
     public Vote save(int restaurantId, int userId, LocalDate localDate) {
         if (!canVote(localDate)) return null;
@@ -54,7 +54,7 @@ public class VoteServiceImpl implements VoteService{
         }
     }
 
-    @CacheEvict(value = {"votesRestaurantCount", "votesAllCount", "votesRestaurantDate"}, allEntries = true)
+    @CacheEvict(value = {"votesRestaurantDate"}, allEntries = true)
     @Override
     public void delete(int userId, LocalDate localDate) {
         voteRepository.delete(userId, localDate);
@@ -77,7 +77,6 @@ public class VoteServiceImpl implements VoteService{
         return voteRepository.findAllByUserId(userId);
     }
 
-    @Cacheable(value = "votesRestaurantCount")
     @Override
     public long countAllByRestaurantId(int restaurantId) {
         return voteRepository.countAllByRestaurantId(restaurantId);
@@ -94,7 +93,6 @@ public class VoteServiceImpl implements VoteService{
         return userRepository.getByRestaurantAndDate(restaurantId, localDate);
     }
 
-    @Cacheable(value = "votesAllCount")
     @Override
     public long countAll() {
         return voteRepository.count();

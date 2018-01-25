@@ -21,7 +21,5 @@
     <cache alias="dishesActuals" uses-template="singleNonExpiryCache"/>
     <cache alias="dishesByDate" uses-template="singleNonExpiryCache"/>
     <cache alias="dishesForToday" uses-template="singleNonExpiryCache"/>
-    <cache alias="votesRestaurantCount" uses-template="singleNonExpiryCache"/>
-    <cache alias="votesAllCount" uses-template="singleNonExpiryCache"/>
     <cache alias="votesRestaurantDate" uses-template="singleNonExpiryCache"/>
 </config>
